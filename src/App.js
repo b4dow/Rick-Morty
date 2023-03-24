@@ -1,8 +1,11 @@
 import "./App.css";
 import { useState } from "react";
-import axios from 'axios'
+import axios from 'axios';
+import { Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav";
 import Cards from "./components/Cards.jsx";
+import About from "./components/About";
+import Detail from "./components/Detail";
 
 function App() {
   const [ characters, setCharacters ] = useState([]);
@@ -26,12 +29,18 @@ function App() {
    setCharacters(characters && characters.filter((character) => character.id !== parseInt(id)))
   }
 
-  
+  const Error = () => <h1>Error 404</h1>
 
   return (
     <div className="App">
       <Nav onSearch={onSearch} />
-      <Cards characters={characters} onClose={onClose} />
+      {/* <Cards characters={characters} onClose={onClose} /> */}
+      <Routes>
+         <Route path="/home" element={<Cards characters={characters} onClose={onClose} />}/>
+         <Route path="/about" element={<About />} />
+         <Route path="/detail/:idDetail" element={<Detail/>} />
+         <Route path="*" element={<Error />} />
+      </Routes>
     </div>
   );
 }
