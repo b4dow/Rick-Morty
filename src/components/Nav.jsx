@@ -5,8 +5,8 @@ const Nav = ({onSearch}) => {
   return (
     <div>
         <SearchBar onSearch={onSearch} />
-        <NavLink to="/about"><button >About</button></NavLink>
-        <NavLink to="/home" ><button>Home</button></NavLink>
+        <NavLink to="/about">About</NavLink>
+        <NavLink to="/home" >Home</NavLink>
 
     </div>
   )
