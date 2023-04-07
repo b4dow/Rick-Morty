@@ -1,15 +1,15 @@
-import SearchBar from './SearchBar'
-import { NavLink } from 'react-router-dom'
+import SearchBar from "./SearchBar";
+import { Link } from "react-router-dom";
 
-const Nav = ({onSearch}) => {
+const Nav = ({ onSearch, logout }) => {
   return (
     <div>
-        <SearchBar onSearch={onSearch} />
-        <NavLink to="/about">About</NavLink>
-        <NavLink to="/home" >Home</NavLink>
-
+      <SearchBar onSearch={onSearch} />
+      <Link to="/about">About</Link>
+      <Link to="/home">Home</Link>
+      <button onClick={logout} >Logout</button>
     </div>
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;

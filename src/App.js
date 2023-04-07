@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Nav from "./components/Nav";
@@ -11,21 +11,14 @@ import Login from "./components/Login";
 function App() {
   const navigate = useNavigate();
 
+  const [access, setAccess] = useState(false);
+  const EMAIL = "hackc7360@gmail.com";
+  const PASSWORD = "Material@2021";
+
   const location = useLocation();
   //estado para los personajes
   const [characters, setCharacters] = useState([]);
   // estado para el formulario
-  const [userData, setUserData] = useState({
-    user: "",
-    password: "",
-  });
-  const [access, setAccess] = useState(false);
-  const USER = "b4rdock";
-  const PASSWORD = "d4rleneAlderson#3103";
-
-  useEffect(() => {
-    !access && navigate("/");
-  }, [access]);
 
   const onSearch = (id) => {
     axios(`https://rickandmortyapi.com/api/character/${id}`).then(
@@ -44,20 +37,21 @@ function App() {
     );
   };
 
-  const handleChange = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value,
-    });
-    
-  };
-
-  const login = (userData) => {
-    if (userData.user === USER && userData.password === PASSWORD) {
+  function login(userData) {
+    if (userData.password === PASSWORD && userData.email === EMAIL) {
       setAccess(true);
       navigate("/home");
     }
-  };
+  }
+
+  function logout() {
+    setAccess(false)
+    navigate("/")
+  }
+
+  useEffect(() => {
+    !access && navigate("/");
+  }, [access]);
 
   const onClose = (id) => {
     setCharacters(
@@ -68,13 +62,10 @@ function App() {
 
   return (
     <div className="App">
-      {location.pathname !== "/" ? <Nav onSearch={onSearch} /> : null}
+      {location.pathname !== "/" ? <Nav logout={logout} onSearch={onSearch} /> : null}
 
       <Routes>
-        <Route
-          path="/"
-          element={<Login userData={userData} handleChange={handleChange} login={login} />}
-        />
+        <Route path="/" element={<Login login={login} />} />
         <Route
           path="/home"
           element={<Cards characters={characters} onClose={onClose} />}

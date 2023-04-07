@@ -1,25 +1,26 @@
-const usernameRegex = /^[a-zA-Z0-9]{4,}$/;
-const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const regexPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
-const validate = (userData) => {
-    errors = {}
-    if(!usernameRegex.test(userData.user)) {
-        errors.user = "Tu usuario debe ser mayor a 4 caracteres"
-    }
-    if(!userData.user) {
-        errors.user = "El nombre de usuario no puede estar vacío"
-    }
-    if(userData.user > 35) {
-        errors.user = "No puede tener más de 35 caracteres"
-    }
-    if(!passwordRegex.test(userData.password)) {
-        errors.password = "La contraseña debe contener al menos 8 caracters"
-    }
-    if(userData.password > 6 && userData.password < 10) {
-        errors.password = "la contraseña tiene que tener una longitud entre 6 y 10 caracteres"
-    }
+const validate = (input) => {
+  let errors = {};
+  if (!regexEmail.test(input.email)) {
+    errors.email = "El nombre de usuario tiene que ser un email";
+  }
+  if (!input.email) {
+    errors.email = "El nombre de usuario no puede estar vacío";
+  }
+  if (input.email.length > 35) {
+    errors.email = "No puede tener más de 35 caracteres";
+  }
+  if (regexPassword.test(input.password)) {
+    errors.password = "La contraseña debe contener al menos 8 caracteres";
+  }
+  if (input.password.length >= 6 && input.password.length <= 10) {
+    errors.password =
+      "la contraseña tiene que tener una longitud entre 6 y 10 caracteres";
+  }
 
-    return errors
+  return errors;
 };
 
 export default validate;
